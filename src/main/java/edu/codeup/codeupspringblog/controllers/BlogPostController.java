@@ -1,5 +1,6 @@
 package edu.codeup.codeupspringblog.controllers;
 
+import edu.codeup.codeupspringblog.models.Ad;
 import edu.codeup.codeupspringblog.models.BlogPost;
 import edu.codeup.codeupspringblog.models.User;
 import edu.codeup.codeupspringblog.repositories.BlogPostRepository;
@@ -51,15 +52,29 @@ public class BlogPostController {
 		return "blogposts/create";
 	}
 
-	@PostMapping("/create")
-	public String createPost(
-			@RequestParam("title") String title,
-			@RequestParam("body") String body
-	) {
-		// Hard Coded user SaintSteve
-		User hardCodedUser = userDao.findById(2L).get();
-		BlogPost newPost = new BlogPost(title, body, hardCodedUser);
-		blogPostDao.save(newPost);
+//	@PostMapping("/create")
+//	public String createPost(
+//			@RequestParam("title") String title,
+//			@RequestParam("body") String body
+//	) {
+//		// Hard Coded user SaintSteve
+//		User hardCodedUser = userDao.findById(2L).get();
+//		BlogPost newPost = new BlogPost(title, body, hardCodedUser);
+//		blogPostDao.save(newPost);
+//		return "redirect:/posts";
+//	}
+
+	public String createBlogPost(Model model) {
+		model.addAttribute("blogpost", new BlogPost());
+		return "blogposts/create";
+	}
+
+	@PostMapping("/{id}/edit")
+	public String insertBlogPost(@ModelAttribute BlogPost blogPost) {
+		BlogPost postToEdit = blogPostDao.findById(blogPost.getId()).get();
+		postToEdit.setTitle(blogPost.getTitle());
+		postToEdit.setBody(blogPost.getBody());
+		blogPostDao.save(blogPost);
 		return "redirect:/posts";
 	}
 
