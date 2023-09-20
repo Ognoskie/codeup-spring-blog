@@ -1,5 +1,6 @@
 package edu.codeup.codeupspringblog.models;
 
+import edu.codeup.codeupspringblog.models.BlogPost;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -12,7 +13,6 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	// (unique = true) will let the user know that email or username or whatever you are using it for is taken
 	@Column(unique = true)
 	private String username;
 
@@ -28,11 +28,25 @@ public class User {
 	public User() {
 	}
 
-	public User(long id, String username, String email, String password) {
+	public User(String username, String email, String password) {
+		this.username = username;
+		this.email = email;
+		this.password = password;
+	}
+
+	public User(String username, String email, String password, List<BlogPost> blogPosts) {
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.blogPosts = blogPosts;
+	}
+
+	public User(long id, String username, String email, String password, List<BlogPost> blogPosts) {
 		this.id = id;
 		this.username = username;
 		this.email = email;
 		this.password = password;
+		this.blogPosts = blogPosts;
 	}
 
 	public long getId() {
@@ -65,5 +79,13 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public List<BlogPost> getBlogPosts() {
+		return blogPosts;
+	}
+
+	public void setBlogPosts(List<BlogPost> blogPosts) {
+		this.blogPosts = blogPosts;
 	}
 }
