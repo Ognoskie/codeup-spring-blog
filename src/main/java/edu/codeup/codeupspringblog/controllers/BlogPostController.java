@@ -52,19 +52,19 @@ public class BlogPostController {
 		return "blogposts/create";
 	}
 
-//	@PostMapping("/create")
-//	public String createPost(
-//			@RequestParam("title") String title,
-//			@RequestParam("body") String body
-//	) {
-//		// Hard Coded user SaintSteve
-//		User hardCodedUser = userDao.findById(2L).get();
-//		BlogPost newPost = new BlogPost(title, body, hardCodedUser);
-//		blogPostDao.save(newPost);
-//		return "redirect:/posts";
-//	}
+	@PostMapping("/create")
+	public String createPost(
+			@RequestParam("title") String title,
+			@RequestParam("body") String body
+	) {
+		// Hard Coded user SaintSteve
+		User hardCodedUser = userDao.findById(2L).get();
+		BlogPost newPost = new BlogPost(title, body, hardCodedUser);
+		blogPostDao.save(newPost);
+		return "redirect:/posts";
+	}
 
-	public String createBlogPost(Model model) {
+	public String showCreatePostView(Model model) {
 		model.addAttribute("blogpost", new BlogPost());
 		return "blogposts/create";
 	}
