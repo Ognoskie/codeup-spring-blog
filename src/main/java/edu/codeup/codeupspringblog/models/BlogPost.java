@@ -1,42 +1,42 @@
 package edu.codeup.codeupspringblog.models;
 
-import edu.codeup.codeupspringblog.repositories.BlogPostRepository;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "blog posts")
-public class Post {
-
-	public Post() {
-	}
-
+@Table(name = "blog_posts")
+public class BlogPost {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-
+	private long id;
 	@Column(nullable = false)
 	private String title;
-
-	@Column(columnDefinition = "TEXT", nullable = false)
+	@Column(nullable = false, columnDefinition = "TEXT")
 	private String body;
 
-	public Post(Long id, String title, String body) {
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn(name = "user id")
+	private User user;
+
+	public BlogPost(long id, String title, String body) {
 		this.id = id;
 		this.title = title;
 		this.body = body;
 	}
 
-	public Post(String title, String body) {
+	public BlogPost(String title, String body) {
 		this.title = title;
 		this.body = body;
 	}
 
-	public Long getId() {
+	public BlogPost() {
+	}
+
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -56,3 +56,4 @@ public class Post {
 		this.body = body;
 	}
 }
+
