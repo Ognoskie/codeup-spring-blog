@@ -1,32 +1,34 @@
 package edu.codeup.codeupspringblog.services;
 
 import edu.codeup.codeupspringblog.models.Ad;
-import org.springframework.beans.factory.annotation.Autowired;
+import edu.codeup.codeupspringblog.models.BlogPost;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
+
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 @Service("mailService")
-
 public class EmailSvc {
 
-	@Autowired
-	public JavaMailSender emailSender;
+	private JavaMailSender javaMailSender;
+
+	public EmailSvc(JavaMailSender javaMailSender) {
+		this.javaMailSender = javaMailSender;
+	}
 
 	@Value("${spring.mail.from}")
 	private String from;
 
-	public void prepareAndSend(Ad ad, String subject, String body) {
+	public void prepareAndSend(BlogPost post, String subject, String body) {
 		SimpleMailMessage msg = new SimpleMailMessage();
 		msg.setFrom(from);
-		msg.setTo("user@email.com");
+		msg.setTo(post.getUser().getEmail());
 		msg.setSubject(subject);
 		msg.setText(body);
-
 		try{
-			this.emailSender.send(msg);
+			this.javaMailSender.send(msg);
 		}
 		catch (MailException ex) {
 			// simply log it and go on...

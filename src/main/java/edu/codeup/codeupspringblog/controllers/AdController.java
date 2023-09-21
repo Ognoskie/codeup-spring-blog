@@ -2,6 +2,7 @@ package edu.codeup.codeupspringblog.controllers;
 
 import edu.codeup.codeupspringblog.models.Ad;
 import edu.codeup.codeupspringblog.repositories.AdRepository;
+import edu.codeup.codeupspringblog.services.EmailSvc;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +14,11 @@ public class AdController {
 
 	private AdRepository adsDao;
 
-	public AdController(AdRepository adsDao) {
+	private EmailSvc emailSvc;
+
+	public AdController(AdRepository adsDao, EmailSvc emailSvc) {
 		this.adsDao = adsDao;
+		this.emailSvc = emailSvc;
 	}
 
 	@GetMapping("/test")
